@@ -1,4 +1,4 @@
-Introducing Vipo
+<b>Introducing Vipo</b>
 
 Vipo Vps solutions is a cryptocurrency based on a platform that allows their users to buy vpses with Vipo. The platform is designed to offer multiple vpses for everyone's needs. The platform is ready and offers instant Vpses when registered and paid with Vipo. We want to integrate the current blockchain technology and use this to offer a vps service that works secure, anonymously and lightning fast!
 
