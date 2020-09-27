@@ -1,0 +1,81 @@
+policy_module(vipo, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type vipo_t;
+type vipo_exec_t;
+init_daemon_domain(vipo_t, vipo_exec_t)
+
+permissive vipo_t;
+
+type vipo_initrc_exec_t;
+init_script_file(vipo_initrc_exec_t)
+
+type vipo_conf_t;
+files_type(vipo_conf_t)
+
+type vipo_var_lib_t;
+files_type(vipo_var_lib_t)
+
+type vipo_var_run_t;
+files_type(vipo_var_run_t)
+
+type vipo_port_t;
+corenet_port(vipo_port_t)
+
+########################################
+#
+# vipo local policy
+#
+allow vipo_t self:process { fork };
+
+allow vipo_t self:fifo_file rw_fifo_file_perms;
+allow vipo_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(vipo_t, vipo_conf_t, vipo_conf_t)
+manage_files_pattern(vipo_t, vipo_conf_t, vipo_conf_t)
+
+manage_dirs_pattern(vipo_t, vipo_var_lib_t, vipo_var_lib_t)
+manage_files_pattern(vipo_t, vipo_var_lib_t, vipo_var_lib_t)
+files_var_lib_filetrans(vipo_t, vipo_var_lib_t, { dir file })
+
+manage_dirs_pattern(vipo_t, vipo_var_run_t, vipo_var_run_t)
+manage_files_pattern(vipo_t, vipo_var_run_t, vipo_var_run_t)
+
+sysnet_dns_name_resolve(vipo_t)
+corenet_all_recvfrom_unlabeled(vipo_t)
+
+allow vipo_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(vipo_t)
+corenet_tcp_sendrecv_generic_node(vipo_t)
+corenet_tcp_sendrecv_all_ports(vipo_t)
+corenet_tcp_bind_generic_node(vipo_t)
+
+gen_require(`
+    type vipo_port_t;
+')
+allow vipo_t vipo_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type vipo_port_t;
+')
+allow vipo_t vipo_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(vipo_t)
+
+files_read_etc_files(vipo_t)
+
+miscfiles_read_localization(vipo_t)
+
+sysnet_dns_name_resolve(vipo_t)
+
+allow vipo_t vipo_exec_t:file execute_no_trans;
+allow vipo_t self:process setsched;
+corecmd_exec_ls(vipo_t)
+corenet_tcp_connect_http_port(vipo_t)
+dev_read_urand(vipo_t)
+fs_getattr_xattr_fs(vipo_t)
+kernel_read_system_state(vipo_t)

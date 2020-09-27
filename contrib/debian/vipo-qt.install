@@ -1,0 +1,6 @@
+usr/local/bin/vipo-qt usr/bin
+share/pixmaps/vipo32.xpm usr/share/pixmaps
+share/pixmaps/vipo16.xpm usr/share/pixmaps
+share/pixmaps/vipo128.png usr/share/pixmaps
+debian/vipo-qt.desktop usr/share/applications
+debian/vipo-qt.protocol usr/share/kde4/services/

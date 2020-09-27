@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=VPS Core
+Comment=VPS P2P Cryptocurrency
+Comment[fr]=VPS, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=VPS, eşten eşe kriptografik sanal para birimi
+Exec=vipo-qt %u
+Terminal=false
+Type=Application
+Icon=vipo128
+MimeType=x-scheme-handler/vipo;
+Categories=Office;Finance;
+StartupWMClass=Vipo-qt

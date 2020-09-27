@@ -1,0 +1,3 @@
+usr/local/bin/vipod usr/bin
+usr/local/bin/vipo-cli usr/bin
+debian/examples/vipo.conf etc/vipo

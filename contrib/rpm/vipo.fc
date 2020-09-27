@@ -1,0 +1,8 @@
+/usr/bin/vipo-cli		--	gen_context(system_u:object_r:vipo_exec_t,s0)
+/usr/sbin/vipod		--	gen_context(system_u:object_r:vipo_exec_t,s0)
+/usr/lib(64)?/vipo/vipod		--	gen_context(system_u:object_r:vipo_exec_t,s0)
+
+/etc/vipo(/.*)?		gen_context(system_u:object_r:vipo_conf_t,s0)
+/var/lib/vipo(/.*)?		gen_context(system_u:object_r:vipo_var_lib_t,s0)
+
+(/var)?/run/vipod(/.*)?   gen_context(system_u:object_r:vipo_var_run_t,s0)
