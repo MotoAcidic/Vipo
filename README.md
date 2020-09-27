@@ -26,6 +26,9 @@ After approximately 17 days the POW phase will end and Vipo will enable POS aka 
 <b>Offficial Links</b>
 
 Website: https://vipo-vps.com
+
 Platform: https://platform.vipo-vps.com
+
 Explorer: https://explorer.vipo-vps.com
+
 Discord: https://discord.gg/U6yRuZq
