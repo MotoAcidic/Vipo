@@ -3150,7 +3150,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 return false;
         } else {
             auto mnOut = block.vtx[1].vout[stakeRecipientSize].nValue;
-            auto mnExp = GetMasternodePayment(pindex->nHeight, nExpectedMint, 0);
+            auto mnExp = GetMasternodePayment(pindex->nHeight, nExpectedMint, 0, 0);
             if (mnExp - mnOut > 100) {
                 LogPrintf("  - masternode hasnt received a reward (expected %llu, found %llu)\n", mnExp, mnOut);
                 if (IsSporkActive(SPORK_18_PAYMENT_ENFORCEMENT_DEFAULT) && ActiveProtocol() >= PAYMENT_ENFORCEMENT)
