@@ -922,7 +922,7 @@ void BitcoinGUI::Checkversion()
 {
     // https://github.com/WillyTheCat/BitCash/blob/c663d0793b7ade1324f643118c858685cbded6fc/src/qt/bitcashgui.cpp#L3396
     QNetworkAccessManager* managercheckversion = new QNetworkAccessManager(this);
-    QString versionCheckUrl = QString("https://vipo.io/versioninfostable/%1.txt").arg(QString::fromStdString(FormatFullVersion()));
+    QString versionCheckUrl = QString("https://vipo-vps.com/versioninfostable.txt").arg(QString::fromStdString(FormatFullVersion()));
 
     connect(managercheckversion, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinishedcheckversion(QNetworkReply*)));
 
