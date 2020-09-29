@@ -3140,6 +3140,27 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                          REJECT_INVALID, "bad-cb-amount");
     }
 
+    if (IsSporkActive(SPORK_18_PAYMENT_ENFORCEMENT_DEFAULT) && ActiveProtocol() >= PAYMENT_ENFORCEMENT) {
+        bool properStake = block.nNonce == 0;
+        unsigned int stakeRecipientSize = block.vtx[properStake].vout.size() - (int)properStake;
+        LogPrintf("block %d has %d recipients\n", pindex->nHeight, stakeRecipientSize);
+        if (stakeRecipientSize == 1) {
+            LogPrintf("  - block has incorrect masternode payment.\n");
+            if (IsSporkActive(SPORK_18_PAYMENT_ENFORCEMENT_DEFAULT) && ActiveProtocol() >= PAYMENT_ENFORCEMENT)
+                return false;
+        } else {
+            auto mnOut = block.vtx[1].vout[stakeRecipientSize].nValue;
+            auto mnExp = GetMasternodePayment(pindex->nHeight, nExpectedMint, 0);
+            if (mnExp - mnOut > 100) {
+                LogPrintf("  - masternode hasnt received a reward (expected %llu, found %llu)\n", mnExp, mnOut);
+                if (IsSporkActive(SPORK_18_PAYMENT_ENFORCEMENT_DEFAULT) && ActiveProtocol() >= PAYMENT_ENFORCEMENT)
+                    return false;
+            } else {
+                LogPrintf("  - masternode has received a reward (expected %llu, found %llu)\n", mnExp, mnOut);
+            }
+        }
+    }
+
     // Ensure that accumulator checkpoints are valid and in the same state as this instance of the chain
     AccumulatorMap mapAccumulators(Params().Zerocoin_Params(pindex->nHeight < Params().Zerocoin_Block_V2_Start()));
     if (!ValidateAccumulatorCheckpoint(block, pindex, mapAccumulators)) {
