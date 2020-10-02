@@ -1993,6 +1993,18 @@ double ConvertBitsToDouble(unsigned int nBits)
     return dDiff;
 }
 
+bool rewardChange(int nHeight) {
+
+	if (nHeight > 4996 && nHeight < 5004) {
+		return true;
+	} else if (nHeight > 24996 && nHeight < 25004) {
+		return true;
+	} else if (nHeight > 149996 && nHeight < 150004) {
+		return true;
+	}
+	return false;
+}
+
 int64_t GetBlockValue(int nHeight)
 {
 
@@ -3134,10 +3146,18 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     }*/
 
     //Check that the block does not overmint
-    if (!IsBlockValueValid(block, nExpectedMint, pindex->nMint)) {
-        return state.DoS(100, error("ConnectBlock() : reward pays too much (actual=%s vs limit=%s)",
-                                    FormatMoney(pindex->nMint), FormatMoney(nExpectedMint)),
-                         REJECT_INVALID, "bad-cb-amount");
+    bool is_changing = rewardChange(pindex->nHeight);
+
+    if (!is_changing) {
+    	if (!IsBlockValueValid(block, nExpectedMint, pindex->nMint)) {
+        	return state.DoS(100, error("ConnectBlock() : reward pays too much (actual=%s vs limit=%s)",
+                	                    FormatMoney(pindex->nMint), FormatMoney(nExpectedMint)),
+                        	 REJECT_INVALID, "bad-cb-amount");
+    	}
+    } else {
+	if(pindex->nMint > (nExpectedMint * 10)) {
+		return state.DoS(100, error("ConnectBlock() : rewards pays too much (actual=%s vs limit=%s)", FormatMoney(pindex->nMint), FormatMoney(nExpectedMint)), REJECT_INVALID, "bad-cb-amount");
+	}
     }
 
     if (IsSporkActive(SPORK_18_PAYMENT_ENFORCEMENT_DEFAULT) && ActiveProtocol() >= PAYMENT_ENFORCEMENT) {
