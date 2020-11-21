@@ -59,9 +59,9 @@
 #include <QVBoxLayout>
 #include <QFontDatabase>
 
-#include "QtNetwork/QNetworkInterface"
-#include <QNetworkReply>
-#include <QDesktopServices>
+//#include "QtNetwork/QNetworkInterface"
+//#include <QNetworkReply>
+//#include <QDesktopServices>
 
 
 #if QT_VERSION < 0x050000
@@ -294,15 +294,16 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     setAutoMintStatus();
 
 
-#ifdef ENABLE_WALLET
+/*#ifdef ENABLE_WALLET
 if (enableWallet) {
     QTimer* timerCheckVersion = new QTimer(this);
     connect(timerCheckVersion, SIGNAL(timeout()), this, SLOT(Checkversion()));
     timerCheckVersion->start(1000 * 60 * 60 * 6);
     Checkversion();
 }
-#endif // ENABLE_WALLET
 
+#endif // ENABLE_WALLET
+*/
 }
 
 BitcoinGUI::~BitcoinGUI()
@@ -918,7 +919,7 @@ void BitcoinGUI::gotoBlockExplorerPage()
     if (walletFrame) walletFrame->gotoBlockExplorerPage();
 }
 
-void BitcoinGUI::Checkversion()
+/*void BitcoinGUI::Checkversion()
 {
     // https://github.com/WillyTheCat/BitCash/blob/c663d0793b7ade1324f643118c858685cbded6fc/src/qt/bitcashgui.cpp#L3396
     QNetworkAccessManager* managercheckversion = new QNetworkAccessManager(this);
@@ -951,6 +952,7 @@ void BitcoinGUI::replyFinishedcheckversion(QNetworkReply *reply)
 
     }
 }
+*/
 #endif // ENABLE_WALLET
 
 void BitcoinGUI::setNumConnections(int count)
