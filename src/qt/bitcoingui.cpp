@@ -301,9 +301,9 @@ if (enableWallet) {
     timerCheckVersion->start(1000 * 60 * 60 * 6);
     Checkversion();
 }
-*/
-#endif // ENABLE_WALLET
 
+#endif // ENABLE_WALLET
+*/
 }
 
 BitcoinGUI::~BitcoinGUI()
